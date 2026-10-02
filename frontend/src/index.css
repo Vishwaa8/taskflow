@@ -1,9 +1,13 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  color: #111827;
+  background: #f8fafc;
 }
 
 body {
-  font-family: Arial, sans-serif;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
 }
