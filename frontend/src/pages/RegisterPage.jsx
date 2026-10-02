@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   CheckCircle2,
   Eye,
@@ -13,10 +14,14 @@ function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
+  const handleSubmit = (event) => {
+    event.preventDefault()
+  }
+
   return (
     <div className="min-h-screen bg-slate-100 px-4 py-6 md:px-8">
       <div className="mx-auto grid min-h-[calc(100vh-48px)] max-w-6xl overflow-hidden rounded-3xl bg-white shadow-2xl lg:grid-cols-2">
-        <section className="relative hidden overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 p-12 text-white lg:flex lg:flex-col lg:justify-between">
+        <section className="relative hidden overflow-hidden bg-linear-to-br from-indigo-600 via-violet-600 to-purple-700 p-12 text-white lg:flex lg:flex-col lg:justify-between">
           <div className="absolute -left-20 top-20 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
           <div className="absolute -bottom-20 -right-20 h-80 w-80 rounded-full bg-white/10 blur-2xl" />
 
@@ -83,6 +88,7 @@ function RegisterPage() {
                   <h1 className="text-xl font-bold text-slate-900">
                     TaskFlow
                   </h1>
+
                   <p className="text-xs text-slate-500">
                     Daily Task Manager
                   </p>
@@ -104,7 +110,10 @@ function RegisterPage() {
               </p>
             </div>
 
-            <form className="space-y-4">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-4"
+            >
               <div>
                 <label
                   htmlFor="name"
@@ -121,7 +130,10 @@ function RegisterPage() {
 
                   <input
                     id="name"
+                    name="name"
                     type="text"
+                    autoComplete="name"
+                    required
                     placeholder="Enter your full name"
                     className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100"
                   />
@@ -144,7 +156,10 @@ function RegisterPage() {
 
                   <input
                     id="email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
+                    required
                     placeholder="you@example.com"
                     className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100"
                   />
@@ -167,15 +182,22 @@ function RegisterPage() {
 
                   <input
                     id="password"
+                    name="password"
                     type={showPassword ? 'text' : 'password'}
+                    autoComplete="new-password"
+                    required
+                    minLength={6}
                     placeholder="Create a password"
                     className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-12 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100"
                   />
 
                   <button
                     type="button"
-                    onClick={() => setShowPassword(!showPassword)}
+                    onClick={() => setShowPassword((current) => !current)}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-slate-600"
+                    aria-label={
+                      showPassword ? 'Hide password' : 'Show password'
+                    }
                   >
                     {showPassword ? (
                       <EyeOff size={18} />
@@ -202,7 +224,15 @@ function RegisterPage() {
 
                   <input
                     id="confirmPassword"
-                    type={showConfirmPassword ? 'text' : 'password'}
+                    name="confirmPassword"
+                    type={
+                      showConfirmPassword
+                        ? 'text'
+                        : 'password'
+                    }
+                    autoComplete="new-password"
+                    required
+                    minLength={6}
                     placeholder="Re-enter your password"
                     className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-12 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100"
                   />
@@ -210,9 +240,14 @@ function RegisterPage() {
                   <button
                     type="button"
                     onClick={() =>
-                      setShowConfirmPassword(!showConfirmPassword)
+                      setShowConfirmPassword((current) => !current)
                     }
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-slate-600"
+                    aria-label={
+                      showConfirmPassword
+                        ? 'Hide confirm password'
+                        : 'Show confirm password'
+                    }
                   >
                     {showConfirmPassword ? (
                       <EyeOff size={18} />
@@ -226,7 +261,9 @@ function RegisterPage() {
               <div className="flex items-start gap-2 pt-1">
                 <input
                   id="terms"
+                  name="terms"
                   type="checkbox"
+                  required
                   className="mt-1 h-4 w-4 rounded border-slate-300 accent-indigo-600"
                 />
 
@@ -262,18 +299,20 @@ function RegisterPage() {
 
             <div className="my-6 flex items-center gap-4">
               <div className="h-px flex-1 bg-slate-200" />
+
               <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
                 Already registered?
               </span>
+
               <div className="h-px flex-1 bg-slate-200" />
             </div>
 
-            <button
-              type="button"
-              className="w-full rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 transition hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700"
+            <Link
+              to="/login"
+              className="block w-full rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-center text-sm font-semibold text-slate-700 transition hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700"
             >
               Sign In
-            </button>
+            </Link>
           </div>
         </section>
       </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   CheckCircle2,
   Eye,
@@ -11,10 +12,14 @@ import {
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
 
+  const handleSubmit = (event) => {
+    event.preventDefault()
+  }
+
   return (
     <div className="min-h-screen bg-slate-100 px-4 py-6 md:px-8">
       <div className="mx-auto grid min-h-[calc(100vh-48px)] max-w-6xl overflow-hidden rounded-3xl bg-white shadow-2xl lg:grid-cols-2">
-        <section className="relative hidden overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 p-12 text-white lg:flex lg:flex-col lg:justify-between">
+        <section className="relative hidden overflow-hidden bg-linear-to-br from-indigo-600 via-violet-600 to-purple-700 p-12 text-white lg:flex lg:flex-col lg:justify-between">
           <div className="absolute -left-20 top-20 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
           <div className="absolute -bottom-20 -right-20 h-80 w-80 rounded-full bg-white/10 blur-2xl" />
 
@@ -81,6 +86,7 @@ function LoginPage() {
                   <h1 className="text-xl font-bold text-slate-900">
                     TaskFlow
                   </h1>
+
                   <p className="text-xs text-slate-500">
                     Daily Task Manager
                   </p>
@@ -102,7 +108,10 @@ function LoginPage() {
               </p>
             </div>
 
-            <form className="space-y-5">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-5"
+            >
               <div>
                 <label
                   htmlFor="email"
@@ -119,7 +128,10 @@ function LoginPage() {
 
                   <input
                     id="email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
+                    required
                     placeholder="you@example.com"
                     className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100"
                   />
@@ -151,16 +163,21 @@ function LoginPage() {
 
                   <input
                     id="password"
+                    name="password"
                     type={showPassword ? 'text' : 'password'}
+                    autoComplete="current-password"
+                    required
                     placeholder="Enter your password"
                     className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-12 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-100"
                   />
 
                   <button
                     type="button"
-                    onClick={() => setShowPassword(!showPassword)}
+                    onClick={() => setShowPassword((current) => !current)}
                     className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-slate-600"
-                    aria-label="Toggle password visibility"
+                    aria-label={
+                      showPassword ? 'Hide password' : 'Show password'
+                    }
                   >
                     {showPassword ? (
                       <EyeOff size={18} />
@@ -174,6 +191,7 @@ function LoginPage() {
               <div className="flex items-center gap-2">
                 <input
                   id="remember"
+                  name="remember"
                   type="checkbox"
                   className="h-4 w-4 rounded border-slate-300 accent-indigo-600"
                 />
@@ -196,18 +214,20 @@ function LoginPage() {
 
             <div className="my-7 flex items-center gap-4">
               <div className="h-px flex-1 bg-slate-200" />
+
               <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
                 New to TaskFlow?
               </span>
+
               <div className="h-px flex-1 bg-slate-200" />
             </div>
 
-            <button
-              type="button"
-              className="w-full rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 transition hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700"
+            <Link
+              to="/register"
+              className="block w-full rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-center text-sm font-semibold text-slate-700 transition hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700"
             >
               Create an account
-            </button>
+            </Link>
 
             <p className="mt-8 text-center text-xs leading-5 text-slate-400">
               By continuing, you agree to TaskFlow&apos;s Terms and Privacy
